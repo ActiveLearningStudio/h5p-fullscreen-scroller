@@ -68,17 +68,18 @@ H5P.FullScreenScroller = (function ($) {
     var initPresentation = function () {
       $wrapper.fullpage({
         onLeave: function(index, nextIndex, direction) {
-          var color = pages[nextIndex-1].getForegroundColor();
+          var foregroundColor = pages[nextIndex-1].getForegroundColor();
+          var backgroundColor = pages[nextIndex-1].getBackgroundColor();
           $pages[index-1].removeClass('fadein')
           pages[nextIndex-1].setActive();
-          progressDots.setActive(nextIndex-1, color);
-          progressDots.setColor(color);
-          $closeButton.css('color', color);
+          progressDots.setActive(nextIndex-1, backgroundColor, foregroundColor);
+          progressDots.setColor(foregroundColor);
+          $closeButton.css('color', foregroundColor);
         },
         afterRender: function () {
           setTimeout (function () {
             $pages[0].addClass('fadein');
-            progressDots.setActive(0, pages[0].getForegroundColor());
+            progressDots.setActive(0, pages[0].getBackgroundColor(), pages[0].getForegroundColor());
             // Resize pages
             resize();
           }, 0);

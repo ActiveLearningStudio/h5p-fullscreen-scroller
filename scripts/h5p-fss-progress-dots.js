@@ -1,6 +1,6 @@
 H5P.FullScreenScroller.ProgressDots = (function ($) {
   "use strict";
-  
+
   function Dot(index, cb) {
     var self = this;
 
@@ -11,8 +11,11 @@ H5P.FullScreenScroller.ProgressDots = (function ($) {
       }
     });
 
-    self.toggleActive = function (activate, color) {
-      $dot.css('border-color', activate ? color : '');
+    self.toggleActive = function (activate, backgroundColor, foregroundColor) {
+      $dot.css({
+        'box-shadow': activate ? '0 0 0 1px ' + foregroundColor : '',
+        'background-color': foregroundColor
+      });
     };
 
     self.getDomElement = function () {
@@ -45,9 +48,9 @@ H5P.FullScreenScroller.ProgressDots = (function ($) {
       return $dotContainer;
     };
 
-    self.setActive = function (index, color) {
+    self.setActive = function (index, backgroundColor, foregroundColor) {
       for (var i = 0; i < dots.length; i++) {
-        dots[i].toggleActive(i === index, color);
+        dots[i].toggleActive(i === index, backgroundColor, foregroundColor);
       }
     };
 

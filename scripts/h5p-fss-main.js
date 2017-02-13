@@ -1,7 +1,7 @@
 H5P.FullScreenScroller = (function ($) {
   'use strict';
 
-  function P2(options, contentId){
+  function FullScreenScroller(options, contentId){
     var self = this;
 
     // Data pages:
@@ -163,5 +163,5 @@ H5P.FullScreenScroller = (function ($) {
   var s = document.getElementsByTagName('script')[0];
   s.parentNode.insertBefore(wf, s);
 
-  return P2;
+  return FullScreenScroller;
 })(H5P.jQuery);

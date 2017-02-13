@@ -34,12 +34,13 @@
             "optional": true
           },
           {
-            "name": "imageMaxWidth",
+            "name": "imageHeight",
             "type": "number",
             "min": 5,
             "max": 100,
             "default": 30,
-            "label": "Max width for image (in percent of total width)",
+            "label": "Image height in percent",
+            "description": "The height using <a target=\"blank\" href=\"https://www.w3.org/TR/css3-values/#viewport-relative-lengths\">vmin unit</a>.",
             "optional": true
           },
           {

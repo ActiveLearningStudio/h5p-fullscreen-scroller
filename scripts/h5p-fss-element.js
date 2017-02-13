@@ -1,6 +1,6 @@
 H5P.FullScreenScroller.Element = (function ($) {
   "use strict";
-  
+
   function Element(options, contentId) {
     var self = this;
     H5P.EventDispatcher.call(self);
@@ -22,7 +22,7 @@ H5P.FullScreenScroller.Element = (function ($) {
         'class': 'h5p-fss-element-image',
         src: H5P.getPath(options.image.path, contentId),
         css: {
-          height: options.imageMaxWidth ? options.imageMaxWidth + 'vmin' : undefined
+          height: options.imageHeight ? options.imageHeight + 'vmin' : undefined
         }
       }).appendTo($inner);
     }

@@ -197,5 +197,15 @@
         "description": "If there are elements on your page being shown on top of this presentation, try increasing this number"
       }
     ]
+  },
+  {
+
+        "name": "showContent",
+        "type": "text",
+        "common": true,
+        "label": "Open content button label",
+        "default": "Show content",
+        "optional": false
+
   }
 ]

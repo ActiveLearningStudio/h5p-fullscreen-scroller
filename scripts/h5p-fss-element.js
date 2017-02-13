@@ -1,10 +1,12 @@
-H5P.P2.Element = (function ($) {
+H5P.FullScreenScroller.Element = (function ($) {
+  "use strict";
+  
   function Element(options, contentId) {
     var self = this;
     H5P.EventDispatcher.call(self);
 
     var $element = $('<div>', {
-      'class': 'h5p-p2-element',
+      'class': 'h5p-fss-element',
       css: {
         backgroundColor: options.visuals.backgroundColor,
         color: options.visuals.foregroundColor
@@ -12,12 +14,12 @@ H5P.P2.Element = (function ($) {
     });
 
     var $inner = $('<div>', {
-      'class': 'h5p-p2-element-inner'
+      'class': 'h5p-fss-element-inner'
     }).appendTo($element);
 
     if (options.image) {
       var $image = $('<img>', {
-        'class': 'h5p-p2-element-image',
+        'class': 'h5p-fss-element-image',
         src: H5P.getPath(options.image.path, contentId),
         css: {
           height: options.imageMaxWidth ? options.imageMaxWidth + 'vmin' : undefined
@@ -27,14 +29,14 @@ H5P.P2.Element = (function ($) {
 
     if (options.title) {
       var $title = $('<div>', {
-        'class': 'h5p-p2-element-title',
+        'class': 'h5p-fss-element-title',
         text: options.title
       }).appendTo($inner);
     }
 
     if (options.description) {
       $inner.append($('<div>', {
-        'class': 'h5p-p2-element-description',
+        'class': 'h5p-fss-element-description',
         html: options.description
       }));
     }
@@ -42,7 +44,7 @@ H5P.P2.Element = (function ($) {
     if (options.link && options.link.url && options.link.title) {
 
       var $link = $('<a>', {
-        'class': 'h5p-p2-element-anchor',
+        'class': 'h5p-fss-element-anchor',
         href: options.link.url.protocol + options.link.url.url,
         text: options.link.title,
         target: 'blank',
@@ -69,24 +71,13 @@ H5P.P2.Element = (function ($) {
       );
 
       $inner.append($('<div>', {
-        'class': 'h5p-p2-element-link'
+        'class': 'h5p-fss-element-link'
       }).append($link));
     }
 
     self.getDomElement = function () {
       return $element;
     };
-
-    self.toggleLayout = function (type) {
-
-      console.log(type);
-
-      var maxWidth = options.imageMaxWidth || undefined;
-      if (type === 'landscape') {
-        maxWidth = 45;
-      }
-      //$image.css('maxWidth', maxWidth ? maxWidth + '%' : undefined);
-    }
   }
 
   Element.prototype = Object.create(H5P.EventDispatcher.prototype);

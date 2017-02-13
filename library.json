@@ -1,7 +1,7 @@
 {
-  "machineName": "H5P.P2",
-  "title": "P2",
-  "description": "TBD",
+  "machineName": "H5P.FullScreenScroller",
+  "title": "Fullscreen scroller",
+  "description": "Create nice fullscreen pages with animations",
   "license": "MIT",
   "author": "Joubel AS (fnoks)",
   "majorVersion": 0,
@@ -18,7 +18,7 @@
   },
   "preloadedCss": [
     {
-      "path": "styles/h5p-ps.css"
+      "path": "styles/h5p-fss.css"
     },
     {
       "path": "jquery.fullpage.min.css"
@@ -26,19 +26,19 @@
   ],
   "preloadedJs": [
     {
-      "path": "scripts/h5p-p2-main.js"
+      "path": "scripts/h5p-fss-main.js"
     },
     {
-      "path": "scripts/h5p-p2-page.js"
+      "path": "scripts/h5p-fss-page.js"
     },
     {
-      "path": "scripts/h5p-p2-element.js"
+      "path": "scripts/h5p-fss-element.js"
+    },
+    {
+      "path": "scripts/h5p-fss-progress-dots.js"
     },
     {
       "path": "jquery.fullpage.min.js"
-    },
-    {
-      "path": "scripts/h5p-p2-progress-dots.js"
     }
   ],
   "preloadedDependencies": [

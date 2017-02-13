@@ -1,4 +1,6 @@
-H5P.P2.Page = (function ($) {
+H5P.FullScreenScroller.Page = (function ($) {
+  "use strict";
+
   function Page(options, contentId, index) {
     var self = this;
     H5P.EventDispatcher.call(self);
@@ -6,7 +8,7 @@ H5P.P2.Page = (function ($) {
     var isSinglePage = options.length === 1;
 
     var $page = $('<div>', {
-      'class': 'h5p-p2-page section ' + (isSinglePage ? 'single-page' : 'double-page')
+      'class': 'h5p-fss-page section ' + (isSinglePage ? 'single-page' : 'double-page')
     });
 
     self.getDomElement = function () {
@@ -25,34 +27,27 @@ H5P.P2.Page = (function ($) {
       return options[options.length-1].visuals.backgroundColor;
     };
 
-    self.toggleLayout = function (type) {
-
-      for (var i = 0; i < elements.length; i++) {
-        elements[i].toggleLayout(type);
-      }
-    };
-
     var $inner = $('<div>', {
-      'class': 'h5p-p2-inner'
+      'class': 'h5p-fss-inner'
     }).appendTo($page);
 
 
     for (var i = 0; i < options.length; i++) {
-      var element = new H5P.P2.Element(options[i], contentId);
+      var element = new H5P.FullScreenScroller.Element(options[i], contentId);
       elements.push(element);
       $inner.append(element.getDomElement());
     }
 
     if (index === 0) {
-      // If first page, add some stuff:
+      // If first page, add a help icon:
       $inner.append($('<div>', {
-        'class': 'h5p-p2-element-mouse'
+        'class': 'h5p-fss-element-mouse'
       }));
     }
 
     // Add down arrow
     $inner.append($('<div>', {
-      'class': 'h5p-p2-element-arrow',
+      'class': 'h5p-fss-element-arrow',
       click: function () {
         self.trigger('clicked', {index: index});
       },

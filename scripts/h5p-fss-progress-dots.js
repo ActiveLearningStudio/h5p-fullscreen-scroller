@@ -1,17 +1,18 @@
-H5P.P2.ProgressDots = (function ($) {
-
+H5P.FullScreenScroller.ProgressDots = (function ($) {
+  "use strict";
+  
   function Dot(index, cb) {
     var self = this;
 
     var $dot = $('<div>', {
-      'class': 'h5p-p2-dot',
+      'class': 'h5p-fss-dot',
       click: function () {
         cb(index);
       }
     });
 
-    self.toggleActive = function (activate) {
-      $dot.toggleClass('active', activate);
+    self.toggleActive = function (activate, color) {
+      $dot.css('border-color', activate ? color : '');
     };
 
     self.getDomElement = function () {
@@ -27,7 +28,7 @@ H5P.P2.ProgressDots = (function ($) {
     var $dots = [];
 
     var $dotContainer = $('<div>', {
-      'class': 'h5p-p2-dot-wrapper'
+      'class': 'h5p-fss-dot-wrapper'
     });
 
     for (var i = 0; i < num; i++) {
@@ -44,9 +45,9 @@ H5P.P2.ProgressDots = (function ($) {
       return $dotContainer;
     };
 
-    self.setActive = function (index) {
+    self.setActive = function (index, color) {
       for (var i = 0; i < dots.length; i++) {
-        dots[i].toggleActive(i === index);
+        dots[i].toggleActive(i === index, color);
       }
     };
 

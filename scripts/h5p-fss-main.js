@@ -1,4 +1,4 @@
-H5P.P2 = (function ($) {
+H5P.FullScreenScroller = (function ($) {
   'use strict';
 
   function P2(options, contentId){
@@ -11,34 +11,34 @@ H5P.P2 = (function ($) {
     var $pages = [];
 
     var $presentation = $('<div>', {
-      'class': 'h5p-p2-presentation'
+      'class': 'h5p-fss-presentation'
     });
 
     var $wrapper = $('<div>', {
-      'class': 'h5p-p2-wrapper'
+      'class': 'h5p-fss-wrapper'
     });
 
     var $smallScreen = $('<div>', {
-      'class': 'h5p-p2-small-screen'
+      'class': 'h5p-fss-small-screen'
     }).append($('<div>', {
-      'class': 'h5p-p2-small-screen-title',
+      'class': 'h5p-fss-small-screen-title',
       text: options.title
     }));
 
     var $loadingScreen = $('<div>', {
-      'class': 'h5p-p2-loading-page'
+      'class': 'h5p-fss-loading-page'
     }).append($('<div>', {
-      'class': 'h5p-p2-loading-icon'
+      'class': 'h5p-fss-loading-icon'
     }));
 
-    var progressDots = new H5P.P2.ProgressDots(options.pages.length);
+    var progressDots = new H5P.FullScreenScroller.ProgressDots(options.pages.length);
     progressDots.on('clicked', function (event) {
       $.fn.fullpage.moveTo(event.data.index+1);
     });
 
     var $startButton = H5P.JoubelUI.createButton({
-      'class': 'h5p-p2-start-button',
-      html: 'Show Content', // TODO translate
+      'class': 'h5p-fss-start-button',
+      text: options.showContent,
       on: {
         click: function () {
           startPresentation();
@@ -47,14 +47,14 @@ H5P.P2 = (function ($) {
     }).appendTo($smallScreen);
 
     var $closeButton = $('<div>', {
-      'class': 'h5p-p2-close-button',
+      'class': 'h5p-fss-close-button',
       click: function () {
         H5P.exitFullScreen();
       }
     });
 
     for (var i = 0; i < options.pages.length; i++) {
-      var el = new H5P.P2.Page(options.pages[i], contentId, i);
+      var el = new H5P.FullScreenScroller.Page(options.pages[i], contentId, i);
       var $page = el.getDomElement();
 
       el.on('clicked', function (event) {
@@ -68,17 +68,17 @@ H5P.P2 = (function ($) {
     var initPresentation = function () {
       $wrapper.fullpage({
         onLeave: function(index, nextIndex, direction) {
+          var color = pages[nextIndex-1].getForegroundColor();
           $pages[index-1].removeClass('fadein')
           pages[nextIndex-1].setActive();
-          progressDots.setActive(nextIndex-1);
-          var color = pages[nextIndex-1].getForegroundColor();
+          progressDots.setActive(nextIndex-1, color);
           progressDots.setColor(color);
           $closeButton.css('color', color);
         },
         afterRender: function () {
           setTimeout (function () {
             $pages[0].addClass('fadein');
-            progressDots.setActive(0);
+            progressDots.setActive(0, pages[0].getForegroundColor());
             // Resize pages
             resize();
           }, 0);
@@ -90,31 +90,20 @@ H5P.P2 = (function ($) {
     };
 
     var leavePresentation = function () {
-      self.$container.removeClass('h5p-p2-loaded');
+      self.$container.removeClass('h5p-fss-loaded');
       $('html, body').css('overflow', 'visible');
     };
 
     var resize = function () {
       var width = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
       var height = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-
-      var isPortrait = height/width > 1.5;
-      var isLandscape = false; //width/height > 1.5;
-
-      self.$container.toggleClass('h5p-p2-portrait', isPortrait);
-      // self.$container.toggleClass('h5p-p2-landscape', isLandscape);
-
-      var layout = isPortrait ? 'portrait' : (isLandscape ? 'landscape' : undefined);
-
-      /*for (var i = 0; i < pages.length; i++) {
-        pages[i].toggleLayout(layout);
-      }*/
+      self.$container.toggleClass('h5p-fss-portrait', height/width > 1.4);
     };
 
     var startPresentation = function () {
       $('html, body').css('overflow', 'hidden');
 
-      self.$container.addClass('h5p-p2-loading');
+      self.$container.addClass('h5p-fss-loading');
       $.fn.fullpage.moveTo(1);
       if (!options.settings.initialFullscreen && options.settings.realFullscreen) {
         H5P.fullScreen(self.$container, self, leavePresentation);
@@ -124,7 +113,7 @@ H5P.P2 = (function ($) {
       }
 
       setTimeout(function () {
-        self.$container.removeClass('h5p-p2-loading').addClass('h5p-p2-loaded');
+        self.$container.removeClass('h5p-fss-loading').addClass('h5p-fss-loaded');
         resize();
       }, 1000);
     };
